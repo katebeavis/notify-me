@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import NotificationProvider from './Components/NotificationContext/NotificationProvider';
+import NotificationProvider from './Components/Context/NotificationProvider';
 import Home from './Components/Home/Home';
 
 const App = () => {

@@ -8,15 +8,7 @@ import {
   Text,
   Button,
 } from './Notification.styles';
-import { NotificationType } from '../../Types';
-
-interface NotificationProps {
-  type: NotificationType;
-  title: any;
-  text: string;
-  onClose: () => void;
-  onMore?: () => void;
-}
+import { INotification } from '../../Types';
 
 const Notification = ({
   type,
@@ -24,8 +16,7 @@ const Notification = ({
   text,
   onClose,
   onMore,
-}: NotificationProps) => {
-  console.log(type);
+}: INotification) => {
   return (
     <Wrapper
       initial={{ opacity: 0, scale: 0.8, x: 300 }}
