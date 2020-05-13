@@ -25,6 +25,7 @@ const Notification = ({
   onClose,
   onMore,
 }: NotificationProps) => {
+  console.log(type);
   return (
     <Wrapper
       initial={{ opacity: 0, scale: 0.8, x: 300 }}
