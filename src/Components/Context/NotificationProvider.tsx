@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { v1 } from 'uuid';
+import styled from 'styled-components';
+import { AnimatePresence } from 'framer-motion';
 
 import NotificationContext from './NotificationContext';
+import useCreateDomElement from './Portal';
+import Notification from '../Notification/Notification';
 import { INotification, INotificationCallbackProps } from '../../Types';
 
 const useNotifications = () => {
@@ -13,7 +18,7 @@ const useNotifications = () => {
 
       const removeNotification = () => {
         setNotifications((notifications) =>
-          notifications.filter((n) => n.id !== id)
+          notifications.filter((n: INotification) => n.id !== id)
         );
       };
 
@@ -31,17 +36,38 @@ const useNotifications = () => {
 };
 
 const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notify } = useNotifications();
+  const { notify, notifications } = useNotifications();
+  const notificationRoot = useCreateDomElement();
 
   return (
-    <NotificationContext.Provider
-      value={{
-        notify,
-      }}
-    >
-      {children}
-    </NotificationContext.Provider>
+    <>
+      <NotificationContext.Provider
+        value={{
+          notify,
+        }}
+      >
+        {children}
+      </NotificationContext.Provider>
+      {notificationRoot &&
+        createPortal(
+          <NotificationsContainer>
+            <AnimatePresence>
+              {notifications.map((notification: INotification) => (
+                <Notification key={notification.id} {...notification} />
+              ))}
+            </AnimatePresence>
+          </NotificationsContainer>,
+          notificationRoot
+        )}
+    </>
   );
 };
 
 export default NotificationProvider;
+
+const NotificationsContainer = styled.div`
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  pointer-events: none;
+`;

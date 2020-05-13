@@ -12,7 +12,7 @@ const Home = () => {
       <button
         onClick={() =>
           notify({
-            type: 'sooouccess',
+            type: 'success',
             title: 'A title',
             text: 'Text',
             onMore: () => alert('woooooo'),

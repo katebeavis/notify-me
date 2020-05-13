@@ -9,6 +9,7 @@ export const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: row;
   box-shadow: 3px 3px 15px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2px;
 `;
 
 export const TextContainer = styled.div`
