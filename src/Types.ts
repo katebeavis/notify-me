@@ -1,16 +1,13 @@
 export enum NotificationType {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR',
-  WARNING = 'WARNING',
+  NEEDED = 'NEEDED',
+  PROMOTIONAL = 'WARNING',
 }
 
-export interface INotification {
+export interface INotification extends INotificationCallbackProps {
   id: string;
-  type: NotificationType;
-  title: string;
-  text: string;
-  onClose: () => void;
-  onMore?: () => void;
+  onClose?: () => void;
 }
 
 export interface INotificationCallbackProps {

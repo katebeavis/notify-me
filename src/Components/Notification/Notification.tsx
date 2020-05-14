@@ -10,14 +10,7 @@ import {
 } from './Notification.styles';
 import { INotification } from '../../Types';
 
-const Notification = ({
-  type,
-  title,
-  text,
-  onClose,
-  onMore,
-}: INotification) => {
-  console.log(type);
+const Notification = ({ title, text, onClose, onMore }: INotification) => {
   return (
     <Wrapper
       initial={{ opacity: 0, scale: 0.8, x: 300 }}
@@ -35,7 +28,7 @@ const Notification = ({
         <Text>{text}</Text>
       </TextContainer>
       <ButtonContainer>
-        <Button onClick={onClose}>Close</Button>
+        {onClose && <Button onClick={onClose}>Close</Button>}
         {onMore && <Button onClick={onMore}>More...</Button>}
       </ButtonContainer>
     </Wrapper>

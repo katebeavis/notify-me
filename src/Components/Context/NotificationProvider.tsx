@@ -7,7 +7,11 @@ import { AnimatePresence } from 'framer-motion';
 import NotificationContext from './NotificationContext';
 import useCreateDomElement from './Portal';
 import Notification from '../Notification/Notification';
-import { INotification, INotificationCallbackProps } from '../../Types';
+import {
+  INotification,
+  INotificationCallbackProps,
+  NotificationType,
+} from '../../Types';
 
 const useNotifications = () => {
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -16,18 +20,26 @@ const useNotifications = () => {
     (notificationPayload: INotificationCallbackProps) => {
       const id = v1();
 
+      const canBeClosed = notificationPayload.type !== NotificationType.NEEDED;
+
       const removeNotification = () => {
         setNotifications((notifications) =>
           notifications.filter((n: INotification) => n.id !== id)
         );
       };
 
+      const notification = {
+        id,
+        ...(canBeClosed && { onClose: removeNotification }),
+        ...notificationPayload,
+      };
+
       setNotifications((notifications: INotification[]) => [
         ...notifications,
-        { id, onClose: removeNotification, ...notificationPayload },
+        notification,
       ]);
 
-      setTimeout(removeNotification, 2000);
+      canBeClosed && setTimeout(removeNotification, 2000);
     },
     []
   );
