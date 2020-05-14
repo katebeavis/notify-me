@@ -12,6 +12,7 @@ import {
   INotificationCallbackProps,
   NotificationType,
 } from '../../Types';
+import { customSort } from './helper';
 
 const useNotifications = () => {
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -44,11 +45,13 @@ const useNotifications = () => {
     []
   );
 
-  return { notify, notifications };
+  const sortedNotifications = customSort(notifications);
+
+  return { notify, sortedNotifications };
 };
 
 const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notify, notifications } = useNotifications();
+  const { notify, sortedNotifications } = useNotifications();
   const notificationRoot = useCreateDomElement();
 
   return (
@@ -64,7 +67,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
         createPortal(
           <NotificationsContainer>
             <AnimatePresence>
-              {notifications.map((notification: INotification) => (
+              {sortedNotifications.map((notification: INotification) => (
                 <Notification key={notification.id} {...notification} />
               ))}
             </AnimatePresence>

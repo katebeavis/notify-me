@@ -2,7 +2,7 @@ export enum NotificationType {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR',
   NEEDED = 'NEEDED',
-  PROMOTIONAL = 'WARNING',
+  PROMOTIONAL = 'PROMOTIONAL',
 }
 
 export interface INotification extends INotificationCallbackProps {
