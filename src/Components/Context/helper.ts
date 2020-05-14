@@ -15,6 +15,33 @@ export const customSort = (notifications: INotification[]) => {
     };
   }, {});
   return notifications.sort(
-    (a: any, b: any) => sortByObject[a['type']] - sortByObject[b['type']]
+    (a: INotification, b: INotification) =>
+      sortByObject[a['type']] - sortByObject[b['type']]
   );
+};
+
+export const getNotificationsToShow = (notificationsArr: INotification[]) => {
+  const needed = neededNotifications(notificationsArr);
+  const notifications =
+    needed.length >= 1
+      ? removePromotionalNotifications(notificationsArr)
+      : notificationsArr;
+  return firstThreeNotifications(notifications);
+};
+
+const neededNotifications = (notifications: INotification[]) =>
+  notifications.filter(
+    (notification: INotification) =>
+      notification.type === NotificationType.NEEDED
+  );
+
+const removePromotionalNotifications = (notifications: INotification[]) =>
+  notifications.filter(
+    (notification: INotification) =>
+      notification.type !== NotificationType.PROMOTIONAL
+  );
+
+const firstThreeNotifications = (notifications: INotification[]) => {
+  const needed = neededNotifications(notifications);
+  return needed.length >= 3 ? needed : notifications.slice(0, 3);
 };

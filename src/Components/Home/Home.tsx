@@ -7,9 +7,16 @@ import { INotificationCallbackProps, NotificationType } from '../../Types';
 const Home = () => {
   const { notify } = useNotify();
 
-  const needed = {
+  const needed1 = {
     type: NotificationType.NEEDED,
-    title: 'Needed notification',
+    title: 'Needed notification1',
+    text: 'Needed',
+    onMore: () => alert('woooooo'),
+  };
+
+  const needed2 = {
+    type: NotificationType.NEEDED,
+    title: 'Needed notification2',
     text: 'Needed',
     onMore: () => alert('woooooo'),
   };
@@ -35,9 +42,9 @@ const Home = () => {
     onMore: () => alert('woooooo'),
   };
 
-  const neededNotifications: INotificationCallbackProps[] = [needed, needed];
+  const neededNotifications: INotificationCallbackProps[] = [needed1, needed2];
 
-  const successNotifications: INotificationCallbackProps[] = [success];
+  const successNotifications: INotificationCallbackProps[] = [success, success];
 
   const errorNotifications: INotificationCallbackProps[] = [error];
 
@@ -48,6 +55,7 @@ const Home = () => {
       ...neededNotifications,
       ...successNotifications,
       ...errorNotifications,
+      ...promoNotifications,
     ];
 
     const toShow =
@@ -65,7 +73,7 @@ const Home = () => {
     <>
       <Header>Notify me</Header>
       <ButtonContainer>
-        <Button onClick={() => notify(needed)}>Notify me of needed</Button>
+        <Button onClick={() => notify(needed1)}>Notify me of needed</Button>
         <Button onClick={() => notify(success)}>Notify me of success</Button>
         <Button onClick={() => notify(error)}>Notify me of error</Button>
         <Button onClick={() => notify(promo)}>Notify me of promo</Button>
