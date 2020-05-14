@@ -21,17 +21,19 @@ const useNotifications = () => {
     (notificationPayload: INotificationCallbackProps) => {
       const id = v1();
 
-      const canBeClosed = notificationPayload.type !== NotificationType.NEEDED;
-
       const removeNotification = () => {
         setNotifications((notifications) =>
-          notifications.filter((n: INotification) => n.id !== id)
+          notifications.filter(
+            (notification: INotification) => notification.id !== id
+          )
         );
       };
 
       const notification = {
         id,
-        ...(canBeClosed && { onClose: removeNotification }),
+        ...(notificationPayload.type !== NotificationType.NEEDED && {
+          onClose: removeNotification,
+        }),
         ...notificationPayload,
       };
 
@@ -44,14 +46,13 @@ const useNotifications = () => {
   );
 
   const notificationsToShow = getNotificationsToShow(notifications);
+  const sortedNotifications = customSort(notificationsToShow);
 
-  const notificationsArr = customSort(notificationsToShow);
-
-  return { notify, notificationsArr };
+  return { notify, sortedNotifications };
 };
 
 const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notify, notificationsArr } = useNotifications();
+  const { notify, sortedNotifications } = useNotifications();
   const notificationRoot = useCreateDomElement();
 
   return (
@@ -67,7 +68,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
         createPortal(
           <NotificationsContainer>
             <AnimatePresence>
-              {notificationsArr.map((notification: INotification) => (
+              {sortedNotifications.map((notification: INotification) => (
                 <Notification key={notification.id} {...notification} />
               ))}
             </AnimatePresence>
