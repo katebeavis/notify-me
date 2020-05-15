@@ -31,7 +31,7 @@ const useNotifications = () => {
 
       const notification = {
         id,
-        ...(notificationPayload.type !== NotificationType.NEEDED && {
+        ...(notificationPayload.type !== NotificationType.ACTION_REQUIRED && {
           onClose: removeNotification,
         }),
         ...notificationPayload,

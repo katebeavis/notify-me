@@ -2,67 +2,19 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import useNotify from '../Context/useNotify';
-import { INotificationCallbackProps, NotificationType } from '../../Types';
+import {
+  dummyDataExclActionRequired,
+  actionRequired,
+  success,
+  error,
+  promo,
+} from '../../dummyData';
 
 const Home = () => {
   const { notify } = useNotify();
 
-  const needed1 = {
-    type: NotificationType.NEEDED,
-    title: 'Needed notification1',
-    text: 'Needed',
-    onMore: () => alert('woooooo'),
-  };
-
-  const needed2 = {
-    type: NotificationType.NEEDED,
-    title: 'Needed notification2',
-    text: 'Needed',
-    onMore: () => alert('woooooo'),
-  };
-
-  const success = {
-    type: NotificationType.SUCCESS,
-    title: 'Success notification',
-    text: 'Success',
-    onMore: () => alert('woooooo'),
-  };
-
-  const error = {
-    type: NotificationType.ERROR,
-    title: 'Error notification',
-    text: 'Error',
-    onMore: () => alert('woooooo'),
-  };
-
-  const promo = {
-    type: NotificationType.PROMOTIONAL,
-    title: 'Promo notification',
-    text: 'Promo',
-    onMore: () => alert('woooooo'),
-  };
-
-  const neededNotifications: INotificationCallbackProps[] = [needed1, needed2];
-
-  const successNotifications: INotificationCallbackProps[] = [success, success];
-
-  const errorNotifications: INotificationCallbackProps[] = [error];
-
-  const promoNotifications: INotificationCallbackProps[] = [promo];
-
   useEffect(() => {
-    const notifications = [
-      ...neededNotifications,
-      ...successNotifications,
-      ...errorNotifications,
-      ...promoNotifications,
-    ];
-
-    const toShow =
-      neededNotifications.length >= 1
-        ? notifications
-        : notifications.concat(promoNotifications);
-    toShow.map((notification: any) => {
+    dummyDataExclActionRequired.map((notification: any) => {
       notify({
         ...notification,
       });
@@ -73,7 +25,9 @@ const Home = () => {
     <>
       <Header>Notify me</Header>
       <ButtonContainer>
-        <Button onClick={() => notify(needed1)}>Notify me of needed</Button>
+        <Button onClick={() => notify(actionRequired)}>
+          Notify me of action required
+        </Button>
         <Button onClick={() => notify(success)}>Notify me of success</Button>
         <Button onClick={() => notify(error)}>Notify me of error</Button>
         <Button onClick={() => notify(promo)}>Notify me of promo</Button>

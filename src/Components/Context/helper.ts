@@ -1,7 +1,8 @@
 import { INotification, NotificationType } from '../../Types';
 
 const sortBy = [
-  NotificationType.NEEDED,
+  NotificationType.ACTION_REQUIRED,
+  NotificationType.INFO,
   NotificationType.SUCCESS,
   NotificationType.ERROR,
   NotificationType.PROMOTIONAL,
@@ -20,28 +21,49 @@ export const customSort = (notifications: INotification[]) => {
   );
 };
 
-export const getNotificationsToShow = (notificationsArr: INotification[]) => {
-  const needed = neededNotifications(notificationsArr);
-  const notifications =
-    needed.length >= 1
-      ? removePromotionalNotifications(notificationsArr)
-      : notificationsArr;
-  return firstThreeNotifications(notifications);
+export const getNotificationsToShow = (notifications: INotification[]) => {
+  const requiredNotifications = getNotificationByType({
+    notifications,
+    requiredTypes: [NotificationType.ACTION_REQUIRED],
+  });
+  const notificationsToShow =
+    requiredNotifications.length >= 1
+      ? removeNotificationByType({
+          notifications,
+          requiredTypes: [NotificationType.PROMOTIONAL],
+        })
+      : notifications;
+  return firstThreeNotifications(notificationsToShow);
 };
 
-const neededNotifications = (notifications: INotification[]) =>
-  notifications.filter(
-    (notification: INotification) =>
-      notification.type === NotificationType.NEEDED
+const getNotificationByType = ({
+  notifications,
+  requiredTypes,
+}: {
+  notifications: INotification[];
+  requiredTypes: NotificationType[];
+}) =>
+  notifications.filter((notification: INotification) =>
+    requiredTypes.includes(notification.type)
   );
 
-const removePromotionalNotifications = (notifications: INotification[]) =>
+const removeNotificationByType = ({
+  notifications,
+  requiredTypes,
+}: {
+  notifications: INotification[];
+  requiredTypes: NotificationType[];
+}) =>
   notifications.filter(
-    (notification: INotification) =>
-      notification.type !== NotificationType.PROMOTIONAL
+    (notification: INotification) => !requiredTypes.includes(notification.type)
   );
 
 const firstThreeNotifications = (notifications: INotification[]) => {
-  const needed = neededNotifications(notifications);
-  return needed.length >= 3 ? needed : notifications.slice(0, 3);
+  const requiredNotifications = getNotificationByType({
+    notifications,
+    requiredTypes: [NotificationType.ACTION_REQUIRED],
+  });
+  return requiredNotifications.length >= 3
+    ? requiredNotifications
+    : notifications.slice(0, 3);
 };
