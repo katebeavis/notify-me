@@ -45,14 +45,14 @@ const useNotifications = () => {
     []
   );
 
-  const notificationsToShow = getNotificationsToShow(notifications);
-  const sortedNotifications = customSort(notificationsToShow);
+  const sortedNotifications = customSort(notifications);
+  const notificationsToShow = getNotificationsToShow(sortedNotifications);
 
-  return { notify, sortedNotifications };
+  return { notify, notificationsToShow };
 };
 
 const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notify, sortedNotifications } = useNotifications();
+  const { notify, notificationsToShow } = useNotifications();
   const notificationRoot = useCreateDomElement();
 
   return (
@@ -68,7 +68,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
         createPortal(
           <NotificationsContainer>
             <AnimatePresence>
-              {sortedNotifications.map((notification: INotification) => (
+              {notificationsToShow.map((notification: INotification) => (
                 <Notification key={notification.id} {...notification} />
               ))}
             </AnimatePresence>
