@@ -8,6 +8,9 @@ const sortBy = [
   NotificationType.PROMOTIONAL,
 ];
 
+export const REQUIRED_TYPES = [NotificationType.ACTION_REQUIRED];
+const OPTIONAL_TYPES = [NotificationType.PROMOTIONAL];
+
 export const customSort = (notifications: INotification[]) => {
   const sortByObject = sortBy.reduce((obj, item, index) => {
     return {
@@ -22,47 +25,26 @@ export const customSort = (notifications: INotification[]) => {
 };
 
 export const getNotificationsToShow = (notifications: INotification[]) => {
-  const requiredNotifications = getNotificationByType({
-    notifications,
-    requiredTypes: [NotificationType.ACTION_REQUIRED],
-  });
+  const requiredNotifications = getRequiredNotifications(notifications);
   const notificationsToShow =
     requiredNotifications.length >= 1
-      ? removeNotificationByType({
-          notifications,
-          requiredTypes: [NotificationType.PROMOTIONAL],
-        })
+      ? removeOptionalNotifications(notifications)
       : notifications;
   return firstThreeNotifications(notificationsToShow);
 };
 
-const getNotificationByType = ({
-  notifications,
-  requiredTypes,
-}: {
-  notifications: INotification[];
-  requiredTypes: NotificationType[];
-}) =>
+const getRequiredNotifications = (notifications: INotification[]) =>
   notifications.filter((notification: INotification) =>
-    requiredTypes.includes(notification.type)
+    REQUIRED_TYPES.includes(notification.type)
   );
 
-const removeNotificationByType = ({
-  notifications,
-  requiredTypes,
-}: {
-  notifications: INotification[];
-  requiredTypes: NotificationType[];
-}) =>
+const removeOptionalNotifications = (notifications: INotification[]) =>
   notifications.filter(
-    (notification: INotification) => !requiredTypes.includes(notification.type)
+    (notification: INotification) => !OPTIONAL_TYPES.includes(notification.type)
   );
 
 const firstThreeNotifications = (notifications: INotification[]) => {
-  const requiredNotifications = getNotificationByType({
-    notifications,
-    requiredTypes: [NotificationType.ACTION_REQUIRED],
-  });
+  const requiredNotifications = getRequiredNotifications(notifications);
   return requiredNotifications.length >= 3
     ? requiredNotifications
     : notifications.slice(0, 3);

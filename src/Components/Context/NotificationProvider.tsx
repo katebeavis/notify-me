@@ -7,12 +7,8 @@ import { AnimatePresence } from 'framer-motion';
 import NotificationContext from './NotificationContext';
 import useCreateDomElement from './Portal';
 import Notification from '../Notification/Notification';
-import {
-  INotification,
-  INotificationCallbackProps,
-  NotificationType,
-} from '../../Types';
-import { customSort, getNotificationsToShow } from './helper';
+import { INotification, INotificationCallbackProps } from '../../Types';
+import { customSort, getNotificationsToShow, REQUIRED_TYPES } from './helper';
 
 const useNotifications = () => {
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -31,7 +27,7 @@ const useNotifications = () => {
 
       const notification = {
         id,
-        ...(notificationPayload.type !== NotificationType.ACTION_REQUIRED && {
+        ...(!REQUIRED_TYPES.includes(notificationPayload.type) && {
           onClose: removeNotification,
         }),
         ...notificationPayload,
