@@ -3,36 +3,37 @@ import { INotificationCallbackProps, NotificationType } from './Types';
 export const actionRequired = {
   type: NotificationType.ACTION_REQUIRED,
   title: 'Action required notification',
-  text: 'Action required',
-  onMore: () => alert('woooooo'),
+  text: "This is an action required notification and can't be dismissed",
+  onMore: () => alert('An action'),
 };
 
 export const info = {
   type: NotificationType.INFO,
   title: 'Info notification',
-  text: 'Info',
-  onMore: () => alert('woooooo'),
+  text: "This is an info notification and can't be dismissed",
+  onMore: () => alert('An action'),
 };
 
 export const success = {
   type: NotificationType.SUCCESS,
   title: 'Success notification',
-  text: 'Success',
-  onMore: () => alert('woooooo'),
+  text: 'This is a success notification',
+  onMore: () => alert('An action'),
 };
 
 export const error = {
   type: NotificationType.ERROR,
   title: 'Error notification',
-  text: 'Error',
-  onMore: () => alert('woooooo'),
+  text: 'This is an error notification',
+  onMore: () => alert('An action'),
 };
 
 export const promo = {
   type: NotificationType.PROMOTIONAL,
-  title: 'Promo notification',
-  text: 'Promo',
-  onMore: () => alert('woooooo'),
+  title: 'Promotional notification',
+  text:
+    'This is a promotional notification and should not be displayed when action required or info are present',
+  onMore: () => alert('An action'),
 };
 
 const actionRequiredNotifications: INotificationCallbackProps[] = [

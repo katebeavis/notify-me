@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import NotificationProvider from './Components/Context/NotificationProvider';
 import Home from './Components/Home/Home';
-import CustomNotification from './Components/CustomNotification/CustomNotification';
+// import CustomNotification from './Components/CustomNotification/CustomNotification';
 
 const App = () => {
   return (
-    <NotificationProvider components={{ Notification: CustomNotification }}>
+    <NotificationProvider>
       <Layout>
         <Home />
       </Layout>

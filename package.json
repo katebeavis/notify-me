@@ -4,8 +4,12 @@
   "main": "index.ts",
   "author": "<katebeavis84@gmail.com>",
   "license": "MIT",
+  "homepage": "http://katebeavis.github.io/notify-me",
   "scripts": {
-    "dev": "webpack-dev-server --open --config ./config/webpack.dev.js"
+    "dev": "webpack-dev-server --open --config ./config/webpack.dev.js",
+    "build": "NODE_ENV=production webpack --config ./config/webpack.prod.js",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
@@ -21,13 +25,16 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "framer-motion": "^1.10.3",
+    "gh-pages": "^2.2.0",
     "html-webpack-plugin": "^4.3.0",
+    "install": "^0.13.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0",
     "ts-loader": "^7.0.4",
     "typescript": "^3.9.2",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
+    "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
     "webpack": "^4.43.0",
