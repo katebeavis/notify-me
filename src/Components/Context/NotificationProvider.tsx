@@ -44,6 +44,8 @@ const useNotifications = () => {
   const sortedNotifications = customSort(notifications);
   const notificationsToShow = getNotificationsToShow(sortedNotifications);
 
+  console.log({ notificationsToShow });
+
   return { notify, notificationsToShow };
 };
 

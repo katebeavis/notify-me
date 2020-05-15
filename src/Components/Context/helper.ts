@@ -8,7 +8,10 @@ const sortBy = [
   NotificationType.PROMOTIONAL,
 ];
 
-export const REQUIRED_TYPES = [NotificationType.ACTION_REQUIRED];
+export const REQUIRED_TYPES = [
+  NotificationType.ACTION_REQUIRED,
+  NotificationType.INFO,
+];
 const OPTIONAL_TYPES = [NotificationType.PROMOTIONAL];
 
 export const customSort = (notifications: INotification[]) => {

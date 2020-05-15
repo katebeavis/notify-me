@@ -7,6 +7,13 @@ export const actionRequired = {
   onMore: () => alert('woooooo'),
 };
 
+export const info = {
+  type: NotificationType.INFO,
+  title: 'Info notification',
+  text: 'Info',
+  onMore: () => alert('woooooo'),
+};
+
 export const success = {
   type: NotificationType.SUCCESS,
   title: 'Success notification',
@@ -33,6 +40,8 @@ const actionRequiredNotifications: INotificationCallbackProps[] = [
   actionRequired,
 ];
 
+const infoNotifications: INotificationCallbackProps[] = [info];
+
 const successNotifications: INotificationCallbackProps[] = [success, success];
 
 const errorNotifications: INotificationCallbackProps[] = [error];
@@ -41,6 +50,7 @@ const promoNotifications: INotificationCallbackProps[] = [promo];
 
 export const dummyData = [
   ...actionRequiredNotifications,
+  ...infoNotifications,
   ...successNotifications,
   ...errorNotifications,
   ...promoNotifications,

@@ -5,6 +5,7 @@ import useNotify from '../Context/useNotify';
 import {
   dummyDataExclActionRequired,
   actionRequired,
+  info,
   success,
   error,
   promo,
@@ -28,6 +29,7 @@ const Home = () => {
         <Button onClick={() => notify(actionRequired)}>
           Notify me of action required
         </Button>
+        <Button onClick={() => notify(info)}>Notify me of info</Button>
         <Button onClick={() => notify(success)}>Notify me of success</Button>
         <Button onClick={() => notify(error)}>Notify me of error</Button>
         <Button onClick={() => notify(promo)}>Notify me of promo</Button>
