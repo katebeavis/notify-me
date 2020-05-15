@@ -6,7 +6,8 @@ import { AnimatePresence } from 'framer-motion';
 
 import NotificationContext from './NotificationContext';
 import useCreateDomElement from './Portal';
-import Notification from '../Notification/Notification';
+import DefaultNotification from '../DefaultNotification/DefaultNotification';
+import NotificationContainer from '../NotificationContainer/NotificationContainer';
 import { INotification, INotificationCallbackProps } from '../../Types';
 import { customSort, getNotificationsToShow, REQUIRED_TYPES } from './helper';
 
@@ -44,14 +45,23 @@ const useNotifications = () => {
   const sortedNotifications = customSort(notifications);
   const notificationsToShow = getNotificationsToShow(sortedNotifications);
 
-  console.log({ notificationsToShow });
+  console.log({ sortedNotifications });
 
   return { notify, notificationsToShow };
 };
 
-const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
+const defaultComponents = { Notification: DefaultNotification };
+
+const NotificationProvider = ({
+  components = defaultComponents,
+  children,
+}: {
+  components?: any;
+  children: React.ReactNode;
+}) => {
   const { notify, notificationsToShow } = useNotifications();
   const notificationRoot = useCreateDomElement();
+  const { Notification }: any = { ...defaultComponents, ...components };
 
   return (
     <>
@@ -64,13 +74,15 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
       </NotificationContext.Provider>
       {notificationRoot &&
         createPortal(
-          <NotificationsContainer>
+          <Container>
             <AnimatePresence>
               {notificationsToShow.map((notification: INotification) => (
-                <Notification key={notification.id} {...notification} />
+                <NotificationContainer key={notification.id}>
+                  <Notification key={notification.id} {...notification} />
+                </NotificationContainer>
               ))}
             </AnimatePresence>
-          </NotificationsContainer>,
+          </Container>,
           notificationRoot
         )}
     </>
@@ -79,7 +91,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
 
 export default NotificationProvider;
 
-const NotificationsContainer = styled.div`
+const Container = styled.div`
   position: fixed;
   top: 16px;
   right: 16px;

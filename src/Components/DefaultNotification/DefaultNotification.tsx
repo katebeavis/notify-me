@@ -7,22 +7,17 @@ import {
   Title,
   Text,
   Button,
-} from './Notification.styles';
+} from './DefaultNotification.styles';
 import { INotification } from '../../Types';
 
-const Notification = ({ title, text, onClose, onMore }: INotification) => {
+const DefaultNotification = ({
+  title,
+  text,
+  onClose,
+  onMore,
+}: INotification) => {
   return (
-    <Wrapper
-      initial={{ opacity: 0, scale: 0.8, x: 300 }}
-      animate={{ opacity: 1, scale: 1, x: 0 }}
-      exit={{ opacity: 0, scale: 0.8, x: 300 }}
-      transition={{
-        type: 'spring',
-        stiffness: 500,
-        damping: 40,
-      }}
-      positionTransition
-    >
+    <Wrapper>
       <TextContainer>
         <Title>{title}</Title>
         <Text>{text}</Text>
@@ -35,4 +30,4 @@ const Notification = ({ title, text, onClose, onMore }: INotification) => {
   );
 };
 
-export default Notification;
+export default DefaultNotification;
