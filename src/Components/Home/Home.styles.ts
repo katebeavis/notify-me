@@ -80,6 +80,6 @@ export const Button = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: rgb(0, 0, 0, 0.25);
+    background-color: rgb(47, 62, 156, 0.75);
   }
 `;
