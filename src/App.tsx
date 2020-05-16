@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import NotificationProvider from './Components/Context/NotificationProvider';
 import Home from './Components/Home/Home';
+import { LARGE } from './Constants';
+
 // import CustomNotification from './Components/CustomNotification/CustomNotification';
 
 const App = () => {
@@ -18,5 +20,7 @@ const App = () => {
 export default App;
 
 const Layout = styled.main`
-  margin: 10em;
+  @media screen and (min-width: ${LARGE}) {
+    margin: 2em 25em;
+  }
 `;

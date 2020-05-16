@@ -58,7 +58,7 @@ export const dummyData = [
 ];
 
 export const dummyDataExclActionRequired = [
-  ...successNotifications,
-  ...errorNotifications,
-  ...promoNotifications,
+  // ...successNotifications,
+  // ...errorNotifications,
+  // ...promoNotifications,
 ];
